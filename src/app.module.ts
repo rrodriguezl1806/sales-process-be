@@ -2,14 +2,16 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
+import { UserModule } from './users/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path';
 
 @Module({
   imports: [
     AuthModule,
-    UsersModule,
+    UserModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -19,6 +21,10 @@ import { Connection } from 'typeorm';
       database: 'sales_process',
       entities: ["dist/**/*.entity{.ts,.js}"],
       synchronize: true,
+      autoLoadEntities: true
+    }),
+    GraphQLModule.forRoot({
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
   ],
   controllers: [AppController],

@@ -3,8 +3,9 @@
   "host": "localhost",
   "port": 3306,
   "username": "root",
-  "password": "root",
+  "password": "localhost",
   "database": "sales_process",
   "entities": ["dist/**/*.entity{.ts,.js}"],
-  "synchronize": true
+  "synchronize": true,
+  "autoLoadEntities": true
 }
