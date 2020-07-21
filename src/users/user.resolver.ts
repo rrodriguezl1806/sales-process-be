@@ -14,13 +14,21 @@ export class UserResolvers {
     return this.usersService.findAll()
   }
 
-  // @Query(() => UserType)
-  // async getUserById(@Args('userId') userId: number) {
-  //   return this.usersService.findUserByUserId(userId)
-  // }
-  //
+  @Query(() => UserType)
+  async getUserById(@Args('id') id: number) {
+    return this.usersService.findOne(id)
+  }
+
   @Mutation(() => UserType)
-  async createUser(@Args('input') input: UserInput) {
-    return this.usersService.createUser(input)
+  async createUser(@Args('newUser') newUser: UserInput) {
+    return this.usersService.createUser(newUser)
+  }
+
+  @Mutation(() => UserType)
+  async updateUser(
+    @Args('id') id: number,
+    @Args('newData') newData: UserInput
+  ) {
+    return this.usersService.updateUser(id, newData)
   }
 }
