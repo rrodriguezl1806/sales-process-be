@@ -16,18 +16,18 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  findOne(id: string): Promise<User> {
+  findOne(id: string | number): Promise<User> {
     return this.userRepository.findOne(id);
   }
 
-  async createUser(createUserDto: UserInput ): Promise<User> {
-    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+  async createUser(newUser: UserInput ): Promise<User> {
+    const hashedPassword = await bcrypt.hash(newUser.password, 10);
 
     const user = {
-      firstName: createUserDto.firstName,
-      lastName: createUserDto.lastName,
-      userName: createUserDto.userName,
-      email: createUserDto.email,
+      firstName: newUser.firstName,
+      lastName: newUser.lastName,
+      userName: newUser.userName,
+      email: newUser.email,
       password: hashedPassword
     }
 
@@ -43,6 +43,17 @@ export class UserService {
       const lastUserId = userList[userList.length - 1]
       return lastUserId.id + 1
     }
+  }
+
+  async updateUser(id, newData: UserInput) {
+    await this.userRepository.update(id, {
+      firstName: newData.firstName,
+      lastName: newData.lastName,
+      userName: newData.userName,
+      email: newData.email,
+      password: newData.password
+    })
+    return await this.userRepository.findOne(id)
   }
 
   async remove(id: string): Promise<void> {
