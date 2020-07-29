@@ -10,12 +10,33 @@ type UserType {
   email: String!
 }
 
+type ProductType {
+  id: Float!
+  code: String!
+  category: String!
+  name: String!
+  description: String!
+  price: String!
+  count: Float!
+  image: String!
+  isActive: Boolean!
+  likes: Float!
+}
+
 type Query {
   users: [UserType!]!
+  getUserById(id: Float!): UserType!
+  userDoLike(productId: Float!, userId: Float!): UserType!
+  products: [ProductType!]!
+  findProduct(id: Float!): ProductType!
+  findProductByCode(code: String!): ProductType!
+  findProductByCategory(category: String!): [ProductType!]!
 }
 
 type Mutation {
-  createUser(input: UserInput!): UserType!
+  createUser(newUser: UserInput!): UserType!
+  updateUser(newData: UserInput!, id: Float!): UserType!
+  createProduct(newProduct: ProductInput!): ProductType!
 }
 
 input UserInput {
@@ -24,4 +45,14 @@ input UserInput {
   userName: String!
   email: String!
   password: String!
+}
+
+input ProductInput {
+  code: String!
+  category: String!
+  name: String!
+  description: String!
+  price: String!
+  count: Float!
+  image: String!
 }

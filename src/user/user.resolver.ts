@@ -19,6 +19,15 @@ export class UserResolvers {
     return this.usersService.findOne(id)
   }
 
+  @Query(() => UserType)
+  async userDoLike(
+    @Args('userId') userId: number,
+    @Args('productId') productId: number
+  ) {
+    return await this.usersService.userDoLike(userId, productId)
+  }
+
+
   @Mutation(() => UserType)
   async createUser(@Args('newUser') newUser: UserInput) {
     return this.usersService.createUser(newUser)
